@@ -1,0 +1,17 @@
+From MAILER-DAEMON Wed Jan 15 14:22:00 2026
+Message-ID: <fixture-malformed-good@example-mail.test>
+From: Source Alpha <alpha.tip@protonmail.example>
+To: J. Reporter <j.reporter@example-news.com>
+Subject: Fixture: valid message before a corrupt one
+Date: Wed, 15 Jan 2026 14:22:00 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+FICTIONAL FIXTURE — this is a valid message. The next entry below is corrupt by design (no headers at all between the From_ delimiter and the body separator).
+
+From MAILER-DAEMON Wed Jan 15 14:22:01 2026
+[corrupt: not even a header block — just raw bytes that the email parser cannot turn into a Message]
+
+\x00\x00 garbage \x00 garbage \x01\x02
+
+This is not a valid RFC822 message.

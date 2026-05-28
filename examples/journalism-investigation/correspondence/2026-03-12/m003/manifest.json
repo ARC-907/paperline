@@ -1,0 +1,21 @@
+{
+  "message": {
+    "rfc822_message_id": "<m003-comment-request@example-mail.test>",
+    "from": "J. Reporter <j.reporter@example-news.com>",
+    "to": ["press@civic-vector.example"],
+    "cc": [],
+    "bcc": [],
+    "subject": "Story query — Halverton RFP-2025-014 contract award — by EOD March 15",
+    "sent_at_iso": "2026-03-12T11:05:00+00:00",
+    "has_attachments": false
+  },
+  "files": {
+    "transcript.md": {"sha256": "PLACEHOLDER-actual-hash-on-pipeline-run", "size_bytes": 980}
+  },
+  "scope": {
+    "in_scope": 1,
+    "matched_rules": ["in_scope_subject_patterns: Halverton; RFP-2025-014", "in_scope_email_patterns: @civic-vector.example"]
+  },
+  "entities": ["reporter", "civic-vector-spokesperson"],
+  "topic_tags": ["comment-request", "civic-vector", "deadline"]
+}

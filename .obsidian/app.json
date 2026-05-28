@@ -1,0 +1,10 @@
+{
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "relative",
+  "useMarkdownLinks": false,
+  "attachmentFolderPath": "./attachments",
+  "showLineNumber": true,
+  "spellcheck": false,
+  "strictLineBreaks": false,
+  "promptDelete": true
+}

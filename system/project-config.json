@@ -1,0 +1,80 @@
+{
+  "_README": "EDIT THIS FILE to deploy Paperline for a different project. All project-specific behavior (contacts, relevance rules, capture provider+config, report templates) reads from here. NO Python source edits needed for a deployment. The SQLite schema is stable across kit versions; the field comments below explain each section.",
+
+  "project": {
+    "name": "<PROJECT NAME -- short, e.g. 'Acme vendor renewal' or 'Smith remodel'>",
+    "user_emails": ["user@example.com"],
+    "user_display_short": "User"
+  },
+
+  "contacts": [
+    {
+      "_doc": "One entry per canonical contact (person or org). slug must be kebab-case unique. email_addresses is also used by capture + relevance filters. license_info is an optional free-form dict for any structured identifier you want to record (e.g. {'license_no': '12345', 'state': 'TX'} or {'vendor_id': 'V-9911'}).",
+      "slug": "user",
+      "display_name": "Project user (you / the operator)",
+      "role": "The party whose perspective drives this corpus -- e.g. project lead, account owner, primary contact",
+      "email_addresses": ["user@example.com"],
+      "phone": null,
+      "license_info": null,
+      "notes": "Outbound correspondence is captured under the user's mailbox."
+    },
+    {
+      "slug": "other-party-primary",
+      "display_name": "Primary other party",
+      "role": "The principal contact you are coordinating / negotiating with",
+      "email_addresses": ["other@example.com"],
+      "phone": null,
+      "license_info": null,
+      "notes": "Add as many entries as the project has distinct contacts."
+    }
+  ],
+
+  "scope_rules": {
+    "_doc": "Used by classify_scope.py. A message is marked relevant (in_scope = 1) if any pattern matches. off_scope_sender_patterns auto-exclude. All patterns are Python regex, applied case-insensitively.",
+    "in_scope_email_patterns": [
+      "@your-other-party-domain\\.com"
+    ],
+    "in_scope_subject_patterns": [
+      "\\bProject Subject Keyword\\b"
+    ],
+    "attachment_in_scope_patterns": [
+      "some-document-stem"
+    ],
+    "off_scope_sender_patterns": [
+      "noreply@",
+      "do[-_]?not[-_]?reply@",
+      "@linkedin\\.com$"
+    ]
+  },
+
+  "report_templates": {
+    "_doc": "Used by render_current_state.py and render_obsidian.py. headline_open_items renders as bullets in current-state.md; obsidian_in_scope_section_heading is the H2 in master-timeline.md; extra_quick_links adds project-specific links to current-state.md.",
+    "obsidian_in_scope_section_heading": "Relevant (your project name)",
+    "headline_open_items": [
+      "Replace these with your project's open items, e.g.:",
+      "**Other party unresponsive on item X** -- raised in messages of <date1>, <date2>; not addressed."
+    ],
+    "extra_quick_links": []
+  },
+
+  "capture": {
+    "_doc": "Used by capture_recent_targeted.py. provider selects the email-source backend ('yahoo_browser' = Playwright/CDP against debug Chrome :9222 with Yahoo Mail logged in; 'gmail_imap' = imap.gmail.com via IMAP with an App Password). The address whitelist gates writes at the per-message level so irrelevant mail can never reach disk.",
+    "provider": "yahoo_browser",
+
+    "_gmail_doc": "Only used when provider=='gmail_imap'. One-time setup: enable 2FA on the Gmail account, generate an App Password at https://myaccount.google.com/apppasswords, then export it as the env var named in gmail_app_password_env (default GMAIL_APP_PASSWORD) before running capture_recent_targeted.py. Spaces in the App Password are stripped automatically.",
+    "gmail_username": "your.address@gmail.com",
+    "gmail_app_password_env": "GMAIL_APP_PASSWORD",
+    "gmail_mailbox": "[Gmail]/All Mail",
+
+    "_query_doc": "search_queries is the list of search terms run against the chosen provider. For yahoo_browser these are plain keywords (Yahoo URL search does not support from:/to: operators). For gmail_imap each query may use prefixes: 'from:address', 'to:address', 'subject:keyword', 'since:YYYY-MM-DD', 'before:YYYY-MM-DD' -- combinable in a single query string.",
+    "search_queries": [
+      "other@example.com",
+      "another-known-address@example.com"
+    ],
+
+    "in_scope_address_whitelist": [
+      "other@example.com",
+      "@your-other-party-domain.com"
+    ]
+  }
+}

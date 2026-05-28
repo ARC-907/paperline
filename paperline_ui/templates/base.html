@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Paperline UI{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { padding-top: 4rem; }
+    .container { max-width: 960px; }
+    pre.report-pane { white-space: pre-wrap; word-wrap: break-word; font-size: 0.9rem; line-height: 1.45; }
+    .text-mono { font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; }
+    .config-textarea { font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Paperline</a>
+      <div class="navbar-nav me-auto">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/config">Config</a>
+        <a class="nav-link" href="/scope-test">Scope test</a>
+      </div>
+      <span class="navbar-text text-muted small">v0.1.0</span>
+    </div>
+  </nav>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="container mt-5 mb-4 text-muted small">
+    Paperline UI — self-hosted records archive companion. No telemetry, no cloud.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

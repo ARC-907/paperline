@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ name }} — Paperline{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-start mb-3">
+  <h1 class="h4 mb-0 text-mono">{{ name }}</h1>
+  <a class="btn btn-sm btn-outline-secondary" href="/">← Home</a>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <pre class="report-pane mb-0">{{ raw }}</pre>
+  </div>
+</div>
+
+<p class="text-muted small mt-3">
+  v0.1 renders reports as raw markdown. v0.2 will render with a markdown-to-HTML pass.
+  In the meantime, open the file directly for full formatting:
+  <code class="text-mono">reports/{{ name }}</code>
+</p>
+{% endblock %}

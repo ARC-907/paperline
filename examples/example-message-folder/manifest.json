@@ -1,0 +1,29 @@
+{
+  "message": {
+    "rfc822_message_id": "ABC123-EXAMPLE@mail.example.com",
+    "from": "\"Sender Name (via e-signature platform)\" <hit-reply@example.com>",
+    "to": ["Recipient <recipient@example.com>"],
+    "cc": [],
+    "bcc": [],
+    "subject": "Please review the vendor MSA draft",
+    "sent_at_iso": "2026-04-22T18:22:46+00:00",
+    "has_attachments": true
+  },
+  "files": {
+    "original.eml":  {"sha256": "5a1b...0c2d", "size_bytes": 630031},
+    "headers.json":  {"sha256": "9f8e...1a3b", "size_bytes": 412},
+    "transcript.md": {"sha256": "7c6d...4e5f", "size_bytes": 8243},
+    "attachments/proposal.pointer.md": {
+      "type": "contract-pointer",
+      "contract_family": "vendor-msa",
+      "contract_version": "v01_2026-04-22",
+      "canonical_path": "documents/vendor-msa/v01_2026-04-22/contract.pdf",
+      "original_sha256": "80b4c7c9...18b1c2d",
+      "original_size_bytes": 423908
+    },
+    "attachments/cover-note.pdf":  {"sha256": "b2a3...c4d5", "size_bytes": 100000},
+    "attachments/cover-note.txt":  {"sha256": "e6f7...g8h9", "size_bytes": 8000}
+  },
+  "captured_via": "browser-automation+playwright-cdp",
+  "migrated_at": "2026-05-15T20:00:00Z"
+}

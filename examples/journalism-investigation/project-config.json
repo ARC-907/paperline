@@ -1,0 +1,107 @@
+{
+  "_README": "Example project-config.json for an investigative-journalism workflow. All names and entities below are FICTIONAL. Copy this file to system/project-config.json to run the journalism example.",
+
+  "project": {
+    "name": "Halverton civic-vector procurement investigation",
+    "user_emails": ["j.reporter@example-news.com"],
+    "user_display_short": "Reporter"
+  },
+
+  "contacts": [
+    {
+      "_doc": "The reporter's own canonical entry. Outbound correspondence is attributed to this slug.",
+      "slug": "reporter",
+      "display_name": "J. Reporter",
+      "role": "Investigative reporter for Example News",
+      "email_addresses": ["j.reporter@example-news.com"],
+      "phone": null,
+      "license_info": null,
+      "notes": "Bylines under 'J. Reporter'. Investigation lead."
+    },
+    {
+      "slug": "source-alpha",
+      "display_name": "Source Alpha (anonymous, city-internal)",
+      "role": "Anonymous source inside Halverton city government",
+      "email_addresses": ["alpha.tip@protonmail.example"],
+      "phone": null,
+      "license_info": null,
+      "notes": "Anonymous. Tipped off the reporter to bid-window timing irregularities. Refer to as Source Alpha in published work; never name."
+    },
+    {
+      "slug": "vendor-x-source",
+      "display_name": "Former Civic Vector engineer",
+      "role": "Former employee of Civic Vector Inc., now a private contractor",
+      "email_addresses": ["former.cv.eng@example-mail.com"],
+      "phone": null,
+      "license_info": null,
+      "notes": "Willing to speak on background. Has direct knowledge of the procurement process."
+    },
+    {
+      "slug": "civic-vector-spokesperson",
+      "display_name": "Civic Vector Inc. — comms team",
+      "role": "Official spokesperson for the company under investigation",
+      "email_addresses": ["press@civic-vector.example"],
+      "phone": null,
+      "license_info": null,
+      "notes": "On-record only. All quotes attributable."
+    }
+  ],
+
+  "scope_rules": {
+    "_doc": "Patterns used by classify_scope.py. A message is in_scope if any pattern matches. For this example, the scope is anything mentioning Civic Vector or the Halverton procurement process.",
+    "in_scope_email_patterns": [
+      "@civic-vector\\.example",
+      "@example-news\\.com",
+      "alpha\\.tip@",
+      "former\\.cv\\.eng@"
+    ],
+    "in_scope_subject_patterns": [
+      "\\bCivic Vector\\b",
+      "\\bHalverton\\b",
+      "\\bprocurement\\b",
+      "\\bRFP-2025-014\\b"
+    ],
+    "attachment_in_scope_patterns": [
+      "budget",
+      "RFP",
+      "contract",
+      "proposal"
+    ],
+    "off_scope_sender_patterns": [
+      "noreply@",
+      "newsletter@",
+      "marketing@"
+    ]
+  },
+
+  "report_templates": {
+    "headline_open_items": [
+      "Confirm bid-window dates against Halverton city council minutes",
+      "Obtain unredacted bid responses from RFP-2025-014",
+      "Reach Civic Vector's CEO for on-record comment",
+      "Verify former-engineer source's claims via second source"
+    ],
+    "obsidian_in_scope_section_heading": "Investigation: in-scope correspondence",
+    "extra_quick_links": [
+      "[Halverton city procurement page](https://example-halverton.gov/procurement)",
+      "[Civic Vector public filings](https://example-state-corporations.gov/civic-vector)"
+    ]
+  },
+
+  "capture": {
+    "_doc": "Offline-friendly default: local_mbox reads the bundled fictional .mbox under examples/. Switch provider to 'gmail_imap' or 'yahoo_browser' once you want to ingest your own live mail. To use a folder of .eml files instead of a single .mbox, drop 'mbox_path' and set 'eml_dir' to the folder path.",
+    "provider": "local_mbox",
+    "mbox_path": "examples/journalism-investigation/correspondence/_combined.mbox",
+    "search_queries": [
+      "Civic Vector",
+      "RFP-2025-014",
+      "Halverton"
+    ],
+    "in_scope_address_whitelist": [
+      "j.reporter@example-news.com",
+      "alpha.tip@protonmail.example",
+      "former.cv.eng@example-mail.com",
+      "press@civic-vector.example"
+    ]
+  }
+}

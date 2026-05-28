@@ -1,0 +1,21 @@
+{
+  "message": {
+    "rfc822_message_id": "<m001-tip@example-mail.test>",
+    "from": "Source Alpha <alpha.tip@protonmail.example>",
+    "to": ["j.reporter@example-news.com"],
+    "cc": [],
+    "bcc": [],
+    "subject": "Halverton RFP-2025-014 — bid window timing",
+    "sent_at_iso": "2026-01-15T14:22:00+00:00",
+    "has_attachments": false
+  },
+  "files": {
+    "transcript.md": {"sha256": "PLACEHOLDER-actual-hash-on-pipeline-run", "size_bytes": 1024}
+  },
+  "scope": {
+    "in_scope": 1,
+    "matched_rules": ["in_scope_subject_patterns: RFP-2025-014", "in_scope_email_patterns: alpha.tip@"]
+  },
+  "entities": ["reporter", "source-alpha"],
+  "topic_tags": ["procurement", "bid-window", "tip"]
+}

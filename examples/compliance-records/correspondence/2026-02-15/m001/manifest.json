@@ -1,0 +1,21 @@
+{
+  "message": {
+    "rfc822_message_id": "<rq-2026-007-initial@example-authority.gov.example>",
+    "from": "Case Officer RQ-2026-007 <case-RQ-2026-007@example-authority.gov.example>",
+    "to": ["compliance@example-co.example"],
+    "cc": [],
+    "bcc": [],
+    "subject": "RQ-2026-007 — Initial inquiry regarding data-handling policy",
+    "sent_at_iso": "2026-02-15T10:00:00+00:00",
+    "has_attachments": false
+  },
+  "files": {
+    "transcript.md": {"sha256": "PLACEHOLDER-actual-hash-on-pipeline-run", "size_bytes": 1100}
+  },
+  "scope": {
+    "in_scope": 1,
+    "matched_rules": ["in_scope_subject_patterns: RQ-2026-007", "in_scope_email_patterns: @example-authority.gov.example"]
+  },
+  "entities": ["regulator-rq-2026-007", "compliance-lead"],
+  "topic_tags": ["regulatory-inquiry", "data-policy", "RQ-2026-007", "initial"]
+}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Scope test — Paperline{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-3">Scope-rule tester</h1>
+<p class="text-muted small">
+  Paste a synthetic message; see whether the current <code class="text-mono">scope_rules</code> would mark it
+  <code>in_scope = 1</code>. Useful when you're tuning patterns and want to test without re-running the pipeline.
+</p>
+
+<form method="post" action="/scope-test">
+  <div class="mb-3">
+    <label class="form-label">From</label>
+    <input type="text" name="from_addr" class="form-control text-mono"
+           value="{{ from_addr if from_addr is defined else '' }}"
+           placeholder="alice@example.com">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Subject</label>
+    <input type="text" name="subject" class="form-control"
+           value="{{ subject if subject is defined else '' }}"
+           placeholder="Re: Project X — proposal v3">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Attachments (filenames, space-separated; optional)</label>
+    <input type="text" name="attachments" class="form-control text-mono"
+           value="{{ attachments if attachments is defined else '' }}"
+           placeholder="proposal-v3.pdf invoice-march.pdf">
+  </div>
+  <button type="submit" class="btn btn-primary">Test</button>
+</form>
+
+{% if result is not none %}
+<div class="mt-4">
+  {% if result.in_scope %}
+  <div class="alert alert-success" role="alert">
+    <strong>✓ in_scope = 1</strong> — this message would be captured.
+  </div>
+  {% else %}
+  <div class="alert alert-secondary" role="alert">
+    <strong>✗ in_scope = 0</strong> — this message would NOT be captured.
+  </div>
+  {% endif %}
+
+  {% if result.matched %}
+  <h2 class="h6 mt-3">Rule matches</h2>
+  <ul class="list-group">
+    {% for m in result.matched %}
+    <li class="list-group-item small text-mono">{{ m }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="text-muted small">No rules matched. Edit <a href="/config">project-config.json</a> if you expected a match.</p>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

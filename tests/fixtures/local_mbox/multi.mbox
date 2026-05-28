@@ -1,0 +1,33 @@
+From MAILER-DAEMON Wed Jan 15 14:22:00 2026
+Message-ID: <fixture-multi-001@example-mail.test>
+From: Source Alpha <alpha.tip@protonmail.example>
+To: J. Reporter <j.reporter@example-news.com>
+Subject: Fixture: Halverton RFP-2025-014 — bid window timing
+Date: Wed, 15 Jan 2026 14:22:00 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+FICTIONAL FIXTURE message 1 of 3. RFP-2025-014 bid window question.
+
+From MAILER-DAEMON Tue Feb 03 09:47:00 2026
+Message-ID: <fixture-multi-002@example-mail.test>
+From: Former Civic Vector Engineer <former.cv.eng@example-mail.com>
+To: J. Reporter <j.reporter@example-news.com>
+Subject: Fixture: Re: Background on Civic Vector procurement practices
+Date: Tue, 03 Feb 2026 09:47:00 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+FICTIONAL FIXTURE message 2 of 3. Background notes on procurement timing.
+
+From MAILER-DAEMON Thu Mar 12 11:05:00 2026
+Message-ID: <fixture-multi-003@example-mail.test>
+From: J. Reporter <j.reporter@example-news.com>
+To: Civic Vector Comms <press@civic-vector.example>
+Cc: editor@example-news.com
+Subject: Fixture: Story query — Halverton RFP-2025-014 contract award
+Date: Thu, 12 Mar 2026 11:05:00 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+FICTIONAL FIXTURE message 3 of 3. Comment request to Civic Vector.

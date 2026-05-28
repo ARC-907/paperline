@@ -1,0 +1,73 @@
+{
+  "_README": "Example project-config.json for a compliance-records workflow. All names, regulators, and entities are FICTIONAL.",
+
+  "project": {
+    "name": "Example Co. — regulatory inquiry RQ-2026-007 records",
+    "user_emails": ["compliance@example-co.example"],
+    "user_display_short": "Compliance"
+  },
+
+  "contacts": [
+    {
+      "slug": "compliance-lead",
+      "display_name": "L. Compliance Lead",
+      "role": "Internal compliance officer at Example Co.",
+      "email_addresses": ["compliance@example-co.example"],
+      "phone": null,
+      "license_info": null,
+      "notes": "Project lead for this regulatory inquiry. Final reviewer for all correspondence to regulator."
+    },
+    {
+      "slug": "regulator-rq-2026-007",
+      "display_name": "Example Privacy Authority — RQ-2026-007 case officer",
+      "role": "External regulator (anonymized)",
+      "email_addresses": ["case-RQ-2026-007@example-authority.gov.example"],
+      "phone": null,
+      "license_info": {"case_no": "RQ-2026-007"},
+      "notes": "Open regulatory inquiry. All correspondence in this thread is on the record."
+    },
+    {
+      "slug": "internal-data-team",
+      "display_name": "Example Co. data engineering team",
+      "role": "Internal stakeholder providing factual responses about data-handling",
+      "email_addresses": ["data-team@example-co.example"],
+      "phone": null,
+      "license_info": null,
+      "notes": "Provides factual records about pipeline architecture; reviewed by Compliance before any external send."
+    }
+  ],
+
+  "scope_rules": {
+    "in_scope_email_patterns": [
+      "@example-authority\\.gov\\.example",
+      "@example-co\\.example"
+    ],
+    "in_scope_subject_patterns": [
+      "\\bRQ-2026-007\\b",
+      "\\bdata policy\\b",
+      "\\bregulatory inquiry\\b"
+    ],
+    "attachment_in_scope_patterns": ["policy", "audit", "RQ-2026-007"],
+    "off_scope_sender_patterns": ["noreply@", "marketing@"]
+  },
+
+  "report_templates": {
+    "headline_open_items": [
+      "Reply to regulator with policy v2 evidence by 2026-03-01",
+      "Internal review of v1 → v2 clause changes by 2026-02-25",
+      "Verify policy v1 hash matches archive (the version regulator received)"
+    ],
+    "obsidian_in_scope_section_heading": "Inquiry RQ-2026-007: case correspondence",
+    "extra_quick_links": []
+  },
+
+  "capture": {
+    "provider": "mbox_file",
+    "mbox_path": "examples/compliance-records/correspondence/_combined.mbox",
+    "in_scope_address_whitelist": [
+      "compliance@example-co.example",
+      "case-RQ-2026-007@example-authority.gov.example",
+      "data-team@example-co.example"
+    ]
+  }
+}

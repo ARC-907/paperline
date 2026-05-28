@@ -1,0 +1,21 @@
+{
+  "message": {
+    "rfc822_message_id": "<m002-followup@example-mail.test>",
+    "from": "Former Civic Vector Engineer <former.cv.eng@example-mail.com>",
+    "to": ["j.reporter@example-news.com"],
+    "cc": [],
+    "bcc": [],
+    "subject": "Re: Background on Civic Vector procurement practices",
+    "sent_at_iso": "2026-02-03T09:47:00+00:00",
+    "has_attachments": false
+  },
+  "files": {
+    "transcript.md": {"sha256": "PLACEHOLDER-actual-hash-on-pipeline-run", "size_bytes": 1450}
+  },
+  "scope": {
+    "in_scope": 1,
+    "matched_rules": ["in_scope_subject_patterns: Civic Vector", "in_scope_email_patterns: former.cv.eng@"]
+  },
+  "entities": ["reporter", "vendor-x-source"],
+  "topic_tags": ["procurement", "background-context", "civic-vector-internal"]
+}

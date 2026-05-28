@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Config — Paperline{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-3">project-config.json</h1>
+<p class="text-muted small">
+  This is the only file you edit to deploy paperline for a different project. Fields are documented inline (the <code class="text-mono">_doc</code> keys explain each section).
+</p>
+
+{% if parse_error %}
+<div class="alert alert-danger" role="alert">
+  <strong>JSON parse error:</strong> <code>{{ parse_error }}</code>
+  <br><small>Your changes were not saved. Fix the syntax above and click Save again.</small>
+</div>
+{% endif %}
+
+<form method="post" action="/config">
+  <div class="mb-3">
+    <textarea name="config_json" id="config_json" class="form-control config-textarea" rows="32" spellcheck="false">{{ config_json }}</textarea>
+  </div>
+  <div class="d-flex justify-content-between">
+    <a href="/" class="btn btn-outline-secondary">Cancel</a>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>
+</form>
+
+<div class="mt-4 small text-muted">
+  <strong>Reminders</strong>
+  <ul class="mb-0">
+    <li><code class="text-mono">project.user_emails</code> — your own outbound mailboxes (your perspective drives the archive)</li>
+    <li><code class="text-mono">contacts</code> — every party in the archive: slug (kebab-case), display_name, email_addresses</li>
+    <li><code class="text-mono">scope_rules</code> — regex patterns; case-insensitive; a message is in-scope if any pattern matches</li>
+    <li><code class="text-mono">capture.provider</code> — <code>gmail_imap</code>, <code>yahoo_browser</code>, or <code>mbox_file</code></li>
+  </ul>
+</div>
+{% endblock %}

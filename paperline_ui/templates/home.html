@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block title %}Paperline — {{ project_name }}{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+  <div class="col">
+    <h1 class="h3 mb-0">{{ project_name }}</h1>
+    <p class="text-muted small mb-0">Project root: <code class="text-mono">{{ project_root }}</code></p>
+  </div>
+  <div class="col-auto">
+    <a href="/launch-obsidian" class="btn btn-primary" target="_blank" rel="noopener" title="Opens the workspace as an Obsidian vault via the obsidian:// URL handler">
+      Open in Obsidian
+    </a>
+  </div>
+</div>
+
+{% if not has_config %}
+<div class="alert alert-warning" role="alert">
+  <strong>No project-config.json found.</strong>
+  This folder doesn't look like a paperline project yet. Either run <code>./bootstrap.sh</code> first, or
+  <a href="/config" class="alert-link">create one in the editor</a>.
+</div>
+{% endif %}
+
+<div class="row mb-2">
+  <div class="col">
+    <h2 class="h6 text-uppercase text-muted mb-2">Corpus</h2>
+  </div>
+  <div class="col-auto">
+    <span class="text-muted small">
+      {% if stats.built %}
+        Last build: <span class="text-mono">{{ stats.last_build_timestamp }}</span> &middot;
+        DB size: <span class="text-mono">{{ stats.corpus_db_size_human }}</span>
+      {% else %}
+        <em>Corpus not yet built</em>
+      {% endif %}
+    </span>
+  </div>
+</div>
+
+{% if not stats.built %}
+<div class="card mb-4 border-info">
+  <div class="card-body">
+    <h3 class="h6 card-title">Corpus not built yet</h3>
+    <p class="small mb-2">
+      <code class="text-mono">system/corpus.sqlite</code> doesn't exist in this workspace.
+      Run the pipeline (button below) or follow
+      <a href="https://github.com/ARC-907/paperline#quickstart" target="_blank" rel="noopener">the bootstrap docs</a>
+      to ingest your first batch of correspondence and documents.
+    </p>
+    <p class="text-muted small mb-0">Once built, this panel will show message counts, date range, and document totals.</p>
+  </div>
+</div>
+{% else %}
+<div class="row row-cols-2 row-cols-md-3 g-3 mb-4">
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h6 class="card-title text-muted mb-1">Messages</h6>
+        <p class="display-6 mb-0">{{ "{:,}".format(stats.total_messages) }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h6 class="card-title text-muted mb-1">Threads</h6>
+        <p class="display-6 mb-0">{{ "{:,}".format(stats.total_threads) }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h6 class="card-title text-muted mb-1">Contacts</h6>
+        <p class="display-6 mb-0">{{ "{:,}".format(stats.total_contacts) }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h6 class="card-title text-muted mb-1">Documents</h6>
+        <p class="display-6 mb-0">{{ "{:,}".format(stats.total_documents) }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h6 class="card-title text-muted mb-1">Date range</h6>
+        <p class="mb-0 text-mono small">
+          {% if stats.date_range.min %}
+            {{ stats.date_range.min[:10] }}<br>
+            <span class="text-muted">to</span> {{ stats.date_range.max[:10] }}
+          {% else %}
+            <span class="text-muted">—</span>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h6 class="card-title text-muted mb-1">Capture provider</h6>
+        <p class="h5 mb-1 text-mono">{{ capture_provider }}</p>
+        <p class="text-muted small mb-0">Configured contacts: {{ contact_count }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="card mb-4">
+  <div class="card-body">
+    <h2 class="h5">Run pipeline</h2>
+    <p class="text-muted small mb-3">Builds the SQLite corpus + generates reports. Synchronous; can take up to 10 minutes on large archives.</p>
+    <button id="run-btn" class="btn btn-primary" onclick="runPipeline()">Run pipeline now</button>
+    <div id="run-output" class="mt-3" style="display:none;">
+      <strong>Pipeline output:</strong>
+      <pre class="report-pane border rounded p-2 mt-2 bg-light" id="run-output-text"></pre>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h2 class="h5">Reports</h2>
+    {% if reports %}
+    <table class="table table-sm">
+      <thead>
+        <tr><th>Name</th><th class="text-end">Size</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for r in reports %}
+        <tr>
+          <td><code class="text-mono">{{ r.name }}</code></td>
+          <td class="text-end small">{{ "%.1f" | format(r.size_bytes / 1024) }} KB</td>
+          <td class="text-end"><a class="btn btn-sm btn-outline-secondary" href="/reports/{{ r.name }}">View</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="text-muted small mb-0">No reports yet. Run the pipeline to generate them.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+async function runPipeline() {
+  const btn = document.getElementById('run-btn');
+  const outDiv = document.getElementById('run-output');
+  const outText = document.getElementById('run-output-text');
+  btn.disabled = true;
+  btn.textContent = "Running…";
+  outDiv.style.display = 'block';
+  outText.textContent = "Pipeline started. This page will update when it finishes.\n";
+  try {
+    const resp = await fetch('/run', { method: 'POST' });
+    const data = await resp.json();
+    if (data.ok) {
+      outText.textContent = "✓ Pipeline completed (exit 0)\n\n--- stdout (tail) ---\n" + (data.stdout || "(empty)") + "\n\n--- stderr (tail) ---\n" + (data.stderr || "(empty)");
+    } else {
+      outText.textContent = "✗ Pipeline failed (exit " + (data.returncode || "?") + ")\n\n--- stdout (tail) ---\n" + (data.stdout || "(empty)") + "\n\n--- stderr (tail) ---\n" + (data.stderr || "(empty)");
+    }
+  } catch (e) {
+    outText.textContent = "Error: " + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Run pipeline now";
+    // Refresh reports table next reload
+    setTimeout(() => { window.location.reload(); }, 1500);
+  }
+}
+</script>
+{% endblock %}

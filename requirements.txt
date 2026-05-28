@@ -1,0 +1,13 @@
+# Paperline — Python deps
+# Pin minor versions for reproducibility; bump deliberately, not silently.
+
+pymupdf>=1.24,<2.0          # PDF text extraction (primary)
+pdf2image>=1.17,<2.0        # PDF -> image for OCR fallback (requires Poppler)
+pytesseract>=0.3.10,<1.0    # OCR (requires Tesseract binary on PATH)
+sqlite-utils>=3.36,<4.0     # convenience over stdlib sqlite3 + Datasette interop
+python-dateutil>=2.9,<3.0   # date parsing (Yahoo headers, RFC822)
+beautifulsoup4>=4.12,<5.0   # parse Yahoo Mail HTML message bodies (uses stdlib html.parser; lxml dropped because no Py3.14 wheel as of 2026-05)
+
+# Optional but useful for the user post-build:
+#   datasette          # web UI: `datasette system/corpus.sqlite`
+#   diff-match-patch   # finer-grained char-level diffs (we use stdlib difflib by default)

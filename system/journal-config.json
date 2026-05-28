@@ -1,0 +1,16 @@
+{
+  "_README": "Configuration for paperline's JOURNAL subsystem -- the operator's private notes about the records / investigation. Categorically separate from the evidence corpus (system/corpus.sqlite). Self-contained inside the paperline repository.",
+
+  "journal": {
+    "name": "Paperline -- private journal",
+    "kit_version": 1,
+    "db_path": "system/journal.sqlite",
+    "ops_log_path": "system/journal-operations.log",
+    "entries_root": "journal/entries",
+    "author_default": "operator"
+  },
+
+  "_doc_separation": "Journal entries are tagged `[JOURNAL]` by query output. Journal entries live in `system/journal.sqlite`; evidence lives in `system/corpus.sqlite`. They share no tables, no triggers, no FTS namespace. Cross-layer queries are supported via the `--with-evidence` flag.",
+
+  "_doc_ops_log": "system/journal-operations.log is an OPERATIONS LOG (engineering bookkeeping for the journal pipeline only). JOURNAL-WRITE / JOURNAL-EDIT / JOURNAL-BUILD events land here. The evidence corpus's separate record-integrity trail is in system/chain-of-custody.log; the two logs are never mixed."
+}

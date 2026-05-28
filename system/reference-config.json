@@ -1,0 +1,30 @@
+{
+  "_README": "Agnostic kit template for the REFERENCE subsystem. Deployers MUST fill in `reference_sources` with the absolute paths to their own reference libraries (statutes, regulatory codes, standards, technical specs, doctrine, etc.). Leave `denylist_slugs` and `skip_file_patterns` updated for the project; the reference DB ingests AGNOSTIC content only -- project-specific facts belong in the evidence layer.",
+
+  "reference": {
+    "name": "Agnostic kit -- reference layer",
+    "kit_version": 1,
+    "db_path": "system/reference.sqlite",
+    "ops_log_path": "system/reference-operations.log",
+    "reference_root": "reference",
+    "doctrine_root": "reference/doctrine"
+  },
+
+  "_doc_ops_log": "The operations log (`ops_log_path`) is engineering bookkeeping for the reference pipeline -- source pulls, DB rebuilds, verifications, dev corrections. It carries no record-integrity weight. The evidence corpus's separate record-integrity trail (covering correspondence, documents, and ingested records) lives in `system/chain-of-custody.log` and is written by `lib_provenance.append_chain_of_custody()`; reference-pipeline tools must use `lib_provenance.append_operations_log()` instead.",
+
+  "_doc_reference_sources": "Each entry is {slug, path, description}. `slug` becomes the subfolder name under reference/doctrine/. `path` is an absolute filesystem path to the source directory. The ingester walks each path looking for .md files. Empty list = nothing is ingested.",
+  "reference_sources": [],
+
+  "_doc_denylist_slugs": "Slugs whose directory MUST NEVER be ingested even if accidentally added to reference_sources. Defense in depth.",
+  "denylist_slugs": [],
+
+  "_doc_skip_file_patterns": "Filename substrings that mark a file as project-specific; even if it lives in an allowlisted subdir, it is skipped. Lowercase substring match against the full relative path.",
+  "skip_file_patterns": [],
+
+  "_doc_skip_frontmatter_status": "If a file's YAML frontmatter has `status: <value>` matching any entry here, the file is skipped at ingest. Common: 'stub' for incomplete drafts.",
+  "skip_frontmatter_status": ["stub"],
+
+  "extensions_to_ingest": [".md"],
+
+  "_doc_separation": "BELT-AND-SUSPENDERS: tools/query_reference.py prefixes every row with [REFERENCE]. The two SQLite DBs (system/corpus.sqlite + system/reference.sqlite) share no tables, no triggers, no FTS namespace, and the query CLIs never JOIN across DBs."
+}

@@ -1,0 +1,9 @@
+Message-ID: <fixture-eml-001@example-mail.test>
+From: Source Alpha <alpha.tip@protonmail.example>
+To: J. Reporter <j.reporter@example-news.com>
+Subject: Fixture EML one — RFP-2025-014
+Date: Wed, 15 Jan 2026 14:22:00 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+FICTIONAL FIXTURE — first .eml in the eml_dir mode test.
