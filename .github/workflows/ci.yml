@@ -7,6 +7,9 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   lint-and-test:
     name: ruff + pytest (Python ${{ matrix.python-version }})
@@ -42,3 +45,20 @@ jobs:
 
       - name: Pytest
         run: pytest -ra
+
+  pip-audit:
+    name: pip-audit (advisory)
+    runs-on: ubuntu-latest
+    # Fail-soft initially: this job surfaces known-vulnerable dependencies
+    # but does not gate merges yet. Promote to gating once the baseline is
+    # clean and tracked.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Audit Python dependencies
+        uses: pypa/gh-action-pip-audit@v1.0.8
+        with:
+          inputs: |
+            requirements.txt
+            pyproject.toml
