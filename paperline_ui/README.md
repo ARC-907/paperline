@@ -45,6 +45,8 @@ Run against a different project root:
 PAPERLINE_PROJECT_ROOT=/path/to/another-project python -m paperline_ui
 ```
 
+**Default binding is `127.0.0.1`.** Paperline UI listens only on loopback by default. If you set `PAPERLINE_UI_HOST` to anything other than `127.0.0.1` / `localhost` / `::1`, the dashboard becomes reachable from your LAN. Do so only on networks you trust and behind a firewall — the UI has no built-in authentication.
+
 ## What this UI is NOT
 
 - Not a hosted service. Local-only. No login, no auth (it binds 127.0.0.1 by default).
